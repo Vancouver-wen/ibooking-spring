@@ -1,0 +1,44 @@
+# 使用springboot提供的配置，修改程序的参数 key是固定的
+# https://docs.spring.io/spring-boot/appendix/application-properties/index.html#appendix.application-properties
+
+# springboot 规定的配置
+server:
+  port: 8080
+  servlet:
+    context-path: / # 设置项目根路径
+  resources:
+    static-locations: /static # 设置静态资源位置
+  tomcat:
+    uri-encoding: UTF-8 # tomcat的URI编码
+    accept-count: 1000 # 连接数满后的排队数，默认为100
+    threads:
+      max: 800 # tomcat最大线程数，默认为200
+      min-spare: 100 # Tomcat启动初始化的线程数，默认值10
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB  # 单个文件大小
+      max-request-size: 20MB # 设置总上传的文件大小
+  # 激活自定义配置
+  profiles:
+    active: private,dev
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/testboot
+    username: root
+    password: password
+    driverClassName: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initialSize: 5 # 初始连接数
+      minIdle: 10 # 最小连接池数量
+      maxActive: 20 # 最大连接池数量
+      maxWait: 60000 # 配置获取连接等待超时的时间
+      connectTimeout: 30000 # 配置连接超时时间
+      socketTimeout: 60000 # 配置网络超时时间
+
+# MyBatis配置
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
